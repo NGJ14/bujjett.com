@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+            name='viewport' />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <link rel="manifest" href="./manifest.json" />
+        <link rel="apple-touch-icon" href="./logo.png" />
+        <link rel="icon" type="image/x-icon" href="./logo.png" />
+        <title>bujjett</title>
+        <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-image: url(./bg.png);
+            object-fit: cover;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+        }
+        h1{
+            font-family: 'Times New Roman', Times, serif;
+            color: lightskyblue;
+            text-align: left;
+            padding: 35px 30px 45px 30px;
+            font-size: 2.5rem;
+        }
+        form { 
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            width: 90%;
+            margin: 20px auto; 
+            align-items: center;
+            background: rgba(113, 113, 113, 0.214);
+            border-radius: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(3.5px);
+            -webkit-backdrop-filter: blur(3.5px);
+            border: 1.8px solid lightskyblue;
+            padding: 10px 0;
+        }
+        input[type="text"], 
+        input[type="number"] { 
+            padding: 10px; 
+            border: 1.8px solid lightskyblue; 
+            border-radius: 25px; 
+            outline: none; 
+            width: 75%;
+            margin: 5px;
+            font-size: 1.1rem;
+            background: #000000;
+            color: white;
+            text-align: center;
+        } 
+        input[type="number"]{
+            width: 60%;
+        }
+        input[type="text"]::placeholder, 
+        input[type="number"]::placeholder { 
+            color: #999; 
+        } 
+        button { 
+            padding: 10px 20px; 
+            background: lightskyblue;
+            color: black; 
+            border: 1.8px solid white;
+            border-radius: 40px; 
+            cursor: pointer; 
+            margin: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            width: 45%;
+        } 
+        button:hover { 
+            background-color: lightskyblue; 
+        } 
+        .expense-table { 
+            border-radius: 8px; 
+            overflow: hidden; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            background: rgba(113, 113, 113, 0.214);
+            border-radius: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(3.5px);
+            -webkit-backdrop-filter: blur(3.5px);
+            border: 1.8px solid lightskyblue; 
+            width: 90%;
+            margin: auto;
+            
+        }        
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            
+        }         
+        thead th { 
+            background-color: #f2f2f2; 
+            padding: 10px; 
+            text-align: c; 
+        } 
+        tbody td { 
+            padding: 8px 12px; 
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            font-style: italic;
+        } 
+        .delete-btn { 
+            color: red; 
+            cursor: pointer; 
+        } 
+        .total-amount { 
+            padding: 20px 0; 
+            text-align: right; 
+            font-size: 3.5rem;
+            color: lightskyblue;
+            background: rgba(113, 113, 113, 0.214);
+            border-radius: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(3.5px);
+            -webkit-backdrop-filter: blur(3.5px);
+            width: 90%;
+            margin: auto;
+            margin-bottom: 10px;
+            border: 1.8px solid lightskyblue; 
+        }
+        .deleteLogo{
+            height: 1.2rem;
+        }
+        .delete-btn{
+            color: lightskyblue;
+            font-weight: 900;
+        }
+    </style>
+    </head>
+    <body>
+        <h1>bujjett.</h1>
+        <div class="total-amount">
+                <strong></strong>
+                &#8377<span id="total-amount">0</span> &nbsp;
+            </div>
+        <form id="expense-form">
+            <input type="text"
+                id="expense-name"
+                placeholder="what" required />
+            <input type="number"
+                id="expense-amount"
+                placeholder="how much ?" required />
+            <button type="submit">
+                Add Expense
+            </button>
+        </form>
+        <div class="expense-table">
+            <table>
+                <tbody id="expense-list"></tbody>
+            </table>
+            
+        </div>
+        <script>
+        const expenseForm = document.getElementById("expense-form"); 
+        const expenseList = document.getElementById("expense-list"); 
+        const totalAmountElement = document.getElementById("total-amount");  
+        let expenses =  JSON.parse(localStorage.getItem("expenses")) || [];  
+        function renderExpenses() {   
+            expenseList.innerHTML = "";   
+            let totalAmount = 0;   
+            for (let i = 0; i < expenses.length; i++) { 
+                const expense = expenses[i]; 
+                const expenseRow = document.createElement("tr"); 
+                expenseRow.innerHTML = ` 
+                <td>${expense.name}</td> 
+                <td>₹${expense.amount}</td> 
+                <td class="delete-btn" data-id="${i}">&#9003;</td>`; 
+                expenseList.appendChild(expenseRow);   
+                totalAmount += expense.amount; 
+            }   
+            totalAmountElement.textContent = 
+                totalAmount.toFixed(2);   
+            localStorage.setItem("expenses",  
+                JSON.stringify(expenses)); 
+        }   
+        function addExpense(event) { 
+            event.preventDefault();  
+            const expenseNameInput = 
+                document.getElementById("expense-name"); 
+            const expenseAmountInput = 
+                document.getElementById("expense-amount"); 
+            const expenseName = 
+                expenseNameInput.value; 
+            const expenseAmount = 
+                parseFloat(expenseAmountInput.value);   
+            expenseNameInput.value = ""; 
+            expenseAmountInput.value = "";   
+            if (expenseName === "" || isNaN(expenseAmount)) { 
+                alert("Please enter valid expense details."); 
+                return; 
+            }   
+            const expense = { 
+                name: expenseName, 
+                amount: expenseAmount, 
+            };   
+            expenses.push(expense);   
+            renderExpenses(); 
+        }   
+        function deleteExpense(event) { 
+            if (event.target.classList.contains("delete-btn")) {   
+                const expenseIndex = 
+                    parseInt(event.target.getAttribute("data-id"));   
+                expenses.splice(expenseIndex, 1);  
+                renderExpenses(); 
+            } 
+        }   
+        expenseForm.addEventListener("submit", addExpense); 
+        expenseList.addEventListener("click", deleteExpense);   
+        renderExpenses();
+    </script>
+    </body>
+</html>

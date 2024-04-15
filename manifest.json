@@ -1,0 +1,66 @@
+{
+  "id": "/",
+  "Scope": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "description": "expense tracker",
+  "display": "fullscreen",
+  "name": "bujjett",
+  "lang": "english",
+  "short_name": "bujjett",
+  "start_url": "./index.html",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "./logo.png",
+      "sizes": "196x196",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./logo.png",
+      "sizes": "196x196",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./logo.png",
+      "sizes": "196x196",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./logo.png",
+      "sizes": "196x196",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./logo.png",
+      "sizes": "196x196",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./screenshot_narrow.png",
+      "sizes": "347x781",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Application"
+    },
+    {
+      "src": "./screenshot_wide.png",
+      "sizes": "1898x900",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Application"
+    }
+  ]
+}
